@@ -9,8 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@auth/core": "^0.18.3",
     "clsx": "^2.0.0",
     "next": "14.0.3",
+    "next-auth": "5.0.0-beta.3",
     "react": "^18",
     "react-dom": "^18",
     "tailwind-merge": "^2.0.0"
@@ -20,6 +22,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
+    "daisyui": "^4.4.6",
     "eslint": "^8",
     "eslint-config-next": "14.0.3",
     "postcss": "^8",

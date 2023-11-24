@@ -1,42 +1,52 @@
 import Image from "next/image";
-import fakeRecipes from "./fakeDb";
+import { fakeRecipes } from "./fakeDb";
+import Link from "next/link";
 
 export default function Home() {
-  const recipes = fakeRecipes;
+  const recipes = fakeRecipes[0];
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-7">
-        {fakeRecipes.map((ingredient) => (
-          <div className="bg-slate-300 p-6 rounded-lg shadow-lg max-w-md mx-auto mt-8">
-            <div className="mb-4">
-              {ingredient.image.length > 1 && (
-                <Image
-                  src={ingredient.image || ""}
-                  alt={""}
-                  width={400 || ""}
-                  height={300 || ""}
-                  className="rounded-lg"
-                />
-              )}
-            </div>
-            <h2 className="text-2xl font-bold mb-4">{ingredient.title}</h2>
-            <p className="text-gray-600 mb-4">{ingredient.description} </p>
+    <main className="flex min-h-screen flex-col place-self-center items-center justify-between">
+      <div className="w-screen h-48 overflow-hidden">
+        <img src="images/Banner.jpg" alt="BannerImage"></img>
+      </div>
 
-            <div>
-              <h3 className="text-xl font-semibold mb-2">Ingredients:</h3>
-              <ul className="list-disc ml-4">
-                {ingredient.ingredients.map((ingredient, index) => (
-                  <li key={index}>{ingredient}</li>
-                ))}
-              </ul>
+      <div className="p-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 place-self-auto">
+          {fakeRecipes.map((ingredient) => (
+            <div className="card bg-base-100 shadow-xl grid grid-rows-2">
+              <div className="w-30 h-60 overflow-hidden rounded-t-lg">
+                <div className="relative">
+                  <span className="indicator-item badge badge-primary absolute top-5 left-5 z-10">
+                    new
+                  </span>
+                  {ingredient.image.length > 1 && (
+                    <Image
+                      src={ingredient.image || ""}
+                      alt=""
+                      width="500"
+                      height="600"
+                      className="z-0"
+                    />
+                  )}
+                </div>
+              </div>
+              <div className="card-body">
+                <h2 className="card-title">{ingredient.title}</h2>
+                <p>{ingredient.description}</p>
+                <p>Updated by: {ingredient.postedBy}</p>
+                <div className="grid grid-cols-2 ">
+                  <div className="badge badge-neutral place-self-start ">
+                    {ingredient.category}
+                  </div>
+                  <Link href="/details/" className="card-actions justify-end">
+                    <span className="btn btn-primary">Show Detail</span>
+                  </Link>
+                </div>
+              </div>
             </div>
-
-            <div className="mt-4">
-              <h3 className="text-xl font-semibold mb-2">Instructions:</h3>
-              <p className="text-gray-600">{ingredient.instructions}</p>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </main>
   );

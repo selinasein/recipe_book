@@ -10,13 +10,13 @@ export default function NavBar() {
         </Link>
         <nav className="flex items-center space-x-5 text-sm font-medium">
           <Link
-            href="/uplaod"
+            href="/upload"
             className="transition-colors hover:text-foreground/80 text-foreground/60"
           >
             Upload
           </Link>
           <Link
-            href="/uplaod"
+            href="/categories"
             className="transition-colors hover:text-foreground/80 text-foreground/60"
           >
             Categories
