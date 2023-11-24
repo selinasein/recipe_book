@@ -17,6 +17,9 @@ export const fakeRecipes = [
     category: "Italian",
     createdAt: "2021-06-01T23:28:56.782Z",
     postedBy: "Selina",
+    userId: "1",
+    likes: 20,
+    comments: 10,
   },
   {
     id: 2,
