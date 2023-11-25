@@ -11,6 +11,7 @@
   "dependencies": {
     "@auth/core": "^0.18.3",
     "clsx": "^2.0.0",
+    "drizzle-orm": "^0.29.0",
     "next": "14.0.3",
     "next-auth": "5.0.0-beta.3",
     "react": "^18",

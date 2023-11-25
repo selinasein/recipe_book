@@ -14,9 +14,9 @@ export const fakeRecipes = [
     ],
     instructions:
       "Cook spaghetti according to package instructions. In a separate pan, sauté chopped onions and garlic. Add ground beef and brown. Pour in canned tomatoes and simmer. Serve sauce over cooked spaghetti.",
-    category: "Italian",
+    category: "Italian", //category id
     createdAt: "2021-06-01T23:28:56.782Z",
-    postedBy: "Selina",
+    postedBy: "Selina", //user id
     userId: "1",
     likes: 20,
     comments: 10,
@@ -104,16 +104,30 @@ export const userData = {
   username: "Selina Sein",
   location: "Vancouver",
   joinedDate: "January 1, 2023",
+  //Github auth
 };
 
 export const categories = [
-  { id: 1, name: "Asian" },
-  { id: 2, name: "Italian" },
-  { id: 3, name: "Mexican" },
-  { id: 4, name: "American" },
-  { id: 5, name: "Fast Food" },
-  { id: 6, name: "Dessert" },
-  { id: 7, name: "Other" },
+  { id: 1, name: "Asian", image: "/images/CategoryAsian.jpg" },
+  { id: 2, name: "Italian", image: "/images/CategoryItalian.jpg" },
+  { id: 3, name: "Mexican", image: "/images/CategoryMexican.jpg" },
+  { id: 4, name: "French", image: "/images/CategoryFrench.jpg" },
+  { id: 5, name: "Fast Food", image: "/images/CategoryFastFood.jpg" },
+  { id: 6, name: "Dessert", image: "/images/CategoryDessert.jpg" },
+  { id: 7, name: "Snack", image: "/images/CategorySnack.jpg" },
+  { id: 8, name: "Vegeterian", image: "/images/CategoryVegeterian.jpg" },
+  { id: 9, name: "Drinks", image: "/images/CategoryDrinks.jpg" },
+  { id: 10, name: "Other", image: "/images/NoImageDefault.jpg" },
+];
+
+const comments = [
+  {
+    id: 1,
+    comment: "This is a comment",
+    postedBy: "Selina",
+    createdAt: "2021-06-01T23:28:56.782Z",
+    recipeId: 1,
+  },
 ];
 
 export default { fakeRecipes, userData, categories };

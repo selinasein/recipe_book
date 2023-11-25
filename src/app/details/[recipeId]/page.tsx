@@ -8,18 +8,7 @@ export default function Details({ params }: { params: { recipeId: string } }) {
 
   const [comments, setComments] = useState([
     { id: 2, user: "Jane Smith", text: "Nice work on the design!" },
-    { id: 1, user: "John Doe", text: "This is the first comment." },
-    { id: 1, user: "John Doe", text: "This is the first comment." },
-    { id: 1, user: "John Doe", text: "This is the first comment." },
-    { id: 1, user: "John Doe", text: "This is the first comment." },
-    { id: 1, user: "John Doe", text: "This is the first comment." },
-    { id: 1, user: "John Doe", text: "This is the first comment." },
-    { id: 1, user: "John Doe", text: "This is the first comment." },
-    { id: 1, user: "John Doe", text: "This is the first comment." },
-    { id: 1, user: "John Doe", text: "This is the first comment." },
-    { id: 1, user: "John Doe", text: "This is the first comment." },
-    { id: 1, user: "John Doe", text: "This is the first comment." },
-    { id: 1, user: "John Doe", text: "This is the first comment." },
+    { id: 1, user: "John Smith", text: "Looks great!" },
   ]);
 
   const addComment = () => {
@@ -57,20 +46,26 @@ export default function Details({ params }: { params: { recipeId: string } }) {
   };
 
   return (
-    <div className="m-10 grid grid-cols-1 md:grid-rows-4 md:grid-cols-3 gap-4">
-      <div className="card w-120 bg-base-100 shadow-xl row-span-2">
+    <div className="m-10 grid grid-cols-1 md:grid-cols-2 gap-3">
+      <div className="card max-h-fit w-120 bg-base-100 shadow-xl row-span-1">
         <figure>
           <img
             src={recipeData.image || "/images/NoImageDefault.jpg"}
             alt={recipeData.title}
           />
         </figure>
-        <div className="card-body max-h-32">
+        <div className="card-body ">
           <h2 className="card-title text-3xl items-center justify-center">
             {recipeData.title}
           </h2>
-          <p>{recipeData.description}</p>
-          <div className="pt-12">
+          <div className="grid grid-cols-3">
+            <p className="col-span-2">{recipeData.description}</p>
+            <div className="badge badge-neutral  place-self-end">
+              {recipeData.category}
+            </div>
+          </div>
+
+          <div className="pt-1">
             <div className="divider divider-start font-bold">Ingredients</div>
             <ul className="list-none p-0">
               {recipeData.ingredients.map((ingredient) => (
@@ -114,8 +109,9 @@ export default function Details({ params }: { params: { recipeId: string } }) {
           </div>
         </div>
       </div>
-      <div className="col-span-2 row-span-1 flex justify-center max-h-44">
-        <div className="stats shadow-xl border border-gray-200">
+
+      <div className="grid justify-center place-self-start gap-5">
+        <div className="stats shadow-xl border border-gray-200 max-h-44">
           <div className="stat">
             <div className="stat-figure text-primary">
               <svg
@@ -139,31 +135,6 @@ export default function Details({ params }: { params: { recipeId: string } }) {
             </div>
           </div>
 
-          <div className="stat">
-            <div className="stat-figure text-secondary">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                className="inline-block w-8 h-8 stroke-current"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M13 10V3L4 14h7v7l9-11h-7z"
-                ></path>
-              </svg>
-            </div>
-            <div className="stat-title">Total Comments</div>
-            <div className="stat-value text-secondary">
-              {recipeData.comments}
-            </div>
-            <div className="stat-desc">
-              There are {recipeData.comments} comments !
-            </div>
-          </div>
-
           <Link href={recipeData.userId} className="stat  hover:bg-slate-200">
             <div className="stat-figure text-secondary">
               <div className="avatar">
@@ -177,25 +148,34 @@ export default function Details({ params }: { params: { recipeId: string } }) {
             <div className="stat-desc text-secondary">Total Recipes: 13</div>
           </Link>
         </div>
-      </div>
-      <div className="wfull rounded-xl bg-base-100 shadow-xl border col-span-2 max-h-fit	 grid-row-end row-span-5 p-4">
-        <h2 className="text-2xl font-bold mb-4">Comments</h2>
-        <div className="divider divider-primary"></div>
+        <div className="w-full rounded-xl bg-base-100 shadow-xl border p-3">
+          <h2 className="text-2xl font-bold mb-4">Comments</h2>
+          <div className="divider divider-primary "></div>
 
-        <ul className="list-none p-0">
-          {comments.map((comment) => (
-            <li key={comment.id} className="mb-2">
-              <strong>{comment.user}:</strong> {comment.text}
-            </li>
-          ))}
-        </ul>
+          <ul className="list-none p-0 max-h-96 overflow-auto ">
+            {comments.map((comment) => (
+              <li key={comment.id} className="mb-2">
+                <strong>{comment.user}:</strong> {comment.text}
+              </li>
+            ))}
+          </ul>
+          <div className="divider divider-primary">Leave comments here !</div>
+          <div className="p-3 grid grid-cols-2">
+            <form>
+              <textarea
+                placeholder="Bio"
+                className="textarea textarea-bordered textarea-lg w-full max-w-lg"
+              ></textarea>
 
-        <button
-          onClick={addComment}
-          className="bg-blue-500 text-white px-4 py-2 mt-4 rounded-md"
-        >
-          Add Comment
-        </button>
+              <button
+                onClick={addComment}
+                className="bg-blue-500 text-white px-4 py-2 mt-4 rounded-md"
+              >
+                Add Comment
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   );
