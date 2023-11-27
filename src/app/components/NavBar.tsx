@@ -26,11 +26,14 @@ export default function NavBar() {
         <div className="justify-end">
           <div className="flex flex-1 items-center space-x-2 justify-end">
             <div className="w-full md:items-center md:justify-end hidden md:block">
-              <input
-                name="search"
-                placeholder="Search the recipe!"
-                className="border-none flex-auto p-2"
-              ></input>
+              <form action="/search" method="get">
+                <input
+                  name="query"
+                  placeholder="Search the recipe!"
+                  className="border-none flex-auto p-2"
+                ></input>
+                <button>Search</button>
+              </form>
             </div>
 
             <nav className="flex items-center">

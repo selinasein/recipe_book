@@ -10,13 +10,13 @@ import {
 } from "drizzle-orm/pg-core";
 
 export const recipes = pgTable("recipes", {
-  id: text("id").primaryKey(),
+  id: serial("id").primaryKey(),
   title: varchar("title", { length: 100 }).notNull(),
   image: text("image").notNull().default("/images/NoImageDefault.jpg"),
   description: text("description").notNull(),
   ingredients: text("ingredients").notNull(),
   instructions: text("instructions").notNull(),
-  categoryId: text("category").references(() => categories.id),
+  categoryId: serial("category").references(() => categories.id),
   userId: serial("user_id")
     .notNull()
     .references(() => users.id),

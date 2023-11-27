@@ -1,9 +1,7 @@
-import { query } from "@/db/queries/recipeFeed";
-import MainFeed from "./components/MainFeed";
+import React from "react";
+import MainFeed from "./MainFeed";
 
-export default async function Home() {
-  const recipes = await query.execute();
-
+function SearchComponent({ searchResult }: any) {
   return (
     <main className="flex min-h-screen flex-col place-self-center items-center justify-between">
       <div className="w-screen h-48 overflow-hidden">
@@ -12,7 +10,7 @@ export default async function Home() {
 
       <div className="p-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 place-self-auto">
-          {recipes.map((recipe) => (
+          {searchResult.map((recipe: any) => (
             <MainFeed recipe={recipe} />
           ))}
         </div>
@@ -20,3 +18,5 @@ export default async function Home() {
     </main>
   );
 }
+
+export default SearchComponent;

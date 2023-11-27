@@ -4,11 +4,11 @@ import { recipes } from "./recipes";
 import { pgTable, serial, text } from "drizzle-orm/pg-core";
 
 export const likes = pgTable("likes", {
-  id: text("id").primaryKey(),
+  id: serial("id").primaryKey(),
   userId: serial("user_id")
     .notNull()
     .references(() => users.id),
-  recipeId: text("recipe_id")
+  recipeId: serial("recipe_id")
     .notNull()
     .references(() => recipes.id),
 });
