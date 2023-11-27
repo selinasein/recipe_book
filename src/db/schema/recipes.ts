@@ -1,26 +1,23 @@
 import { categories } from "./categories";
 import { users } from "./users";
 import {
-  serial,
-  varchar,
   integer,
+  varchar,
   pgTable,
-  pgEnum,
   text,
   timestamp,
+  serial,
 } from "drizzle-orm/pg-core";
 
-// export const mediaType = pgEnum("media_type", ["image", "video"]);
-
 export const recipes = pgTable("recipes", {
-  id: serial("id").primaryKey(),
+  id: text("id").primaryKey(),
   title: varchar("title", { length: 100 }).notNull(),
-  image: integer("width"),
+  image: text("image").notNull().default("/images/NoImageDefault.jpg"),
   description: text("description").notNull(),
   ingredients: text("ingredients").notNull(),
   instructions: text("instructions").notNull(),
-  categoryId: integer("category").references(() => categories.id),
-  userId: integer("user_id")
+  categoryId: text("category").references(() => categories.id),
+  userId: serial("user_id")
     .notNull()
     .references(() => users.id),
   likes: integer("likes"),

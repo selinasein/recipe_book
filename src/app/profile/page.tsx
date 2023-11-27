@@ -17,7 +17,7 @@ export default function Profile() {
   };
 
   return (
-    <main className="grid grid-cols-3 grid-flow-col gap-4  flex-col items-center justify-between p-10">
+    <main className="grid grid-cols-1 md:grid-cols-3 grid-flow-col gap-4 flex-col items-center justify-between p-10">
       <div className="flex flex-col items-center place-self-stretch">
         <img
           src="https://placekitten.com/150/150" // Replace with your profile picture URL
@@ -44,7 +44,7 @@ export default function Profile() {
         )}
       </div>
 
-      <div className="mb-6 place-self-start col-span-2 bg-slate-100 p-10 w-11/12 rounded-3xl">
+      <div className="mb-6 place-self-start md:col-span-2 bg-slate-100 p-10 w-11/12 rounded-3xl">
         <h1 className="text-3xl font-bold mb-4">
           {userData.username}'s Cooking Book
         </h1>
