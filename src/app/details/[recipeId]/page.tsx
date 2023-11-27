@@ -13,6 +13,8 @@ export default async function Details({
   const result = await recipeQuery.execute();
   const recipe: TRecipeDetail = result[0];
 
+  console.log(recipe);
+
   const theLikesQuery = likesQuery(parseInt(recipeId));
   const likesResult = await theLikesQuery.execute();
   const likes: TLikes = likesResult;

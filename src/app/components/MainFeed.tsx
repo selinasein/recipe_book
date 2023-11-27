@@ -2,6 +2,7 @@ import { Recipe } from "@/db/queries/recipeFeed";
 import Link from "next/link";
 import Image from "next/image";
 import HeartIcon from "./HeartIcon";
+import NewIcon from "./NewIcon";
 import { likesQuery } from "@/db/queries/likes";
 
 export default async function MainFeed({ recipe }: { recipe: Recipe }) {
@@ -14,9 +15,7 @@ export default async function MainFeed({ recipe }: { recipe: Recipe }) {
     <div className="card bg-base-100 shadow-xl grid grid-rows-2">
       <div className="w-30 h-60 overflow-hidden rounded-t-lg">
         <div className="relative">
-          <span className="indicator-item badge badge-primary absolute top-5 left-5 z-10">
-            new
-          </span>
+          <NewIcon createdAt={recipe.createdAt} />
           <HeartIcon isLiked={isLiked} recipeId={recipe.id} />
 
           <Image

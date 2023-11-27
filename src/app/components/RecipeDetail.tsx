@@ -3,6 +3,7 @@ import { TComment } from "@/db/queries/comments";
 import { TLikes } from "@/db/queries/likes";
 import { TRecipeDetail } from "@/db/queries/recipeDetail";
 import Link from "next/link";
+import formatDateString from "@/utils/formatDateString";
 
 type Props = {
   recipe: TRecipeDetail;
@@ -77,7 +78,7 @@ export default function RecipeDetail({ recipe, comments, likes }: Props) {
       </div>
 
       <div className="grid justify-center place-self-start gap-5">
-        <div className="stats shadow-xl border border-gray-200 max-h-44">
+        <div className="stats shadow-xl border border-gray-200 max-h-50">
           <div className="stat">
             <div className="stat-figure text-primary">
               <svg
@@ -114,7 +115,7 @@ export default function RecipeDetail({ recipe, comments, likes }: Props) {
             </div>
             <div className="stat-value text-md">{recipe.user}</div>
             <div className="stat-title">
-              Posted on {JSON.stringify(recipe.createdAt)}
+              Posted on {formatDateString(recipe.createdAt)}
             </div>
             <div className="stat-desc text-secondary">Total Recipes: 13</div>
           </Link>

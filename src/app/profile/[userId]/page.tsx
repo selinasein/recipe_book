@@ -1,12 +1,14 @@
 "use client";
 
-export default function Profile() {
+export default function Profil({ params }: { params: { userId: string } }) {
   const isLoggedIn = true; // Replace with your authentication logic
   const userData = {
     username: "Your Name",
     location: "Your City",
     joinedDate: "January 1, 2023",
   };
+
+  const user_id = params.userId;
 
   const handleSignOut = () => {
     // Implement your sign-out logic here

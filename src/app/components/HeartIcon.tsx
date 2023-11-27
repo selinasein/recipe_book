@@ -1,5 +1,6 @@
 "use client";
 import addLike from "@/actions/addLike";
+import deleteLike from "@/actions/deleteLike";
 import { useState } from "react";
 
 type Props = {
@@ -12,7 +13,13 @@ export default function HeartIcon({ recipeId, isLiked }: Props) {
     setFilled(!filled);
     const formData = new FormData();
     formData.set("recipeId", recipeId.toString());
-    await addLike(formData);
+    if (filled) {
+      await deleteLike(formData);
+      console.log("like added");
+    } else {
+      await addLike(formData);
+      console.log("like deleted");
+    }
   };
   return (
     <span onClick={() => handleClick()} className="absolute top-5 right-5 z-10">
