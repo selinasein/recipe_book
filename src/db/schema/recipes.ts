@@ -17,7 +17,7 @@ export const recipes = pgTable("recipes", {
   ingredients: text("ingredients").notNull(),
   instructions: text("instructions").notNull(),
   categoryId: serial("category").references(() => categories.id),
-  userId: serial("user_id")
+  userId: text("user_id")
     .notNull()
     .references(() => users.id),
   likes: integer("likes"),

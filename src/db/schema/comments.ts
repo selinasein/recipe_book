@@ -6,7 +6,7 @@ import { integer, pgTable, text, timestamp, serial } from "drizzle-orm/pg-core";
 export const comments = pgTable("comments", {
   id: serial("id").primaryKey(),
   content: text("content").notNull(),
-  userId: serial("user_id")
+  userId: text("user_id")
     .notNull()
     .references(() => users.id),
   recipeId: serial("recipe_id")

@@ -5,7 +5,7 @@ import { pgTable, serial, text } from "drizzle-orm/pg-core";
 
 export const likes = pgTable("likes", {
   id: serial("id").primaryKey(),
-  userId: serial("user_id")
+  userId: text("user_id")
     .notNull()
     .references(() => users.id),
   recipeId: serial("recipe_id")

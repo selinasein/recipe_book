@@ -4,7 +4,7 @@ import "./globals.css";
 import { cn } from "../../tailwind.config";
 import Link from "next/link";
 import Image from "next/image";
-import NavBar from "./components/NavBar";
+import NavBar from "../components/NavBar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,7 +23,7 @@ export default function RootLayout({
       <body
         className={cn(
           inter.className,
-          "relative flex min-h-screen flex-col m-4"
+          "relative flex min-h-screen min-w-screen flex-col m-4"
         )}
       >
         <NavBar />

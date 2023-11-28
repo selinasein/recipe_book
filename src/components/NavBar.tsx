@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function NavBar() {
   return (
     <header className="sticky top-0 z-50 w-full border-b backdrop-blur">
-      <div className="container flex h-14 mr-4 md:flex justify-between">
+      <div className="container flex h-14 md:flex justify-between items-center w-screen">
         <Link href="/" className="mr-6 flex items-center space-x-5">
           Recipe Book
         </Link>
@@ -23,8 +23,8 @@ export default function NavBar() {
           </Link>
         </nav>
 
-        <div className="justify-end">
-          <div className="flex flex-1 items-center space-x-2 justify-end">
+        <div className="justify-end ">
+          <div className="flex items-center justify-between">
             <div className="w-full md:items-center md:justify-end hidden md:block">
               <form action="/search" method="get">
                 <input
@@ -36,10 +36,10 @@ export default function NavBar() {
               </form>
             </div>
 
-            <nav className="flex items-center">
+            <nav className="flex">
               <div className="rounded-full h-15 w-15 overflow-hidden">
                 <Link
-                  href="/profile"
+                  href="/me"
                   className="transition-colors hover:text-foreground/80 text-foreground/60"
                 >
                   <Image

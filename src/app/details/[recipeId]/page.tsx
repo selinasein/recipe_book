@@ -1,4 +1,4 @@
-import RecipeDetail from "@/app/components/RecipeDetail";
+import RecipeDetail from "@/components/RecipeDetail";
 import { TComment, commentsQuery } from "@/db/queries/comments";
 import { TLikes, likesQuery } from "@/db/queries/likes";
 import { TRecipeDetail, query } from "@/db/queries/recipeDetail";

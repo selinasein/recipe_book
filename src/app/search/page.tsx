@@ -1,6 +1,6 @@
 import { Recipe, query } from "@/db/queries/recipeFeed";
-import MainFeed from "@/app/components/MainFeed";
-import SearchComponent from "../components/SearchComponent";
+import MainFeed from "@/components/MainFeed";
+import SearchComponent from "../../components/SearchComponent";
 import { searchQuery } from "@/db/queries/searchFeed";
 
 export default async function Search({

@@ -1,6 +1,9 @@
 "use client";
 
+import { createRecipe } from "@/actions/createRecipe";
+import { getSignedURL } from "@/actions/getSignedUrl";
 import { TCategory } from "@/db/queries/categories";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function CreateRecipeClient({
@@ -9,27 +12,60 @@ export default function CreateRecipeClient({
   categories: TCategory[];
 }) {
   const [recipeTitle, setRecipeTitle] = useState("");
-  const [recipeCategory, setRecipeCategory] = useState(categories[0].id);
+  const [recipeCategory, setRecipeCategory] = useState("");
   const [recipeIngredients, setRecipeIngredients] = useState("");
   const [recipeInstructions, setRecipeInstructions] = useState("");
   const [recipeImage, setRecipeImage] = useState("");
   const [recipeTitleIndicator, setRecipeTitleIndicator] = useState("");
+  const [file, setFile] = useState<File | undefined>(undefined);
+  const router = useRouter();
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFile(e.target.files?.[0]);
+  };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Recipe Data:", [
-      recipeTitle,
-      recipeCategory,
-      recipeIngredients,
-      recipeInstructions,
-      recipeImage,
-    ]);
-    const formData = new FormData(e.currentTarget);
-    // const result = await createExpense(formData);
-    // setSelectedCategory(categories[0].id);
-    // setSelectedDate("");
-    // setDescription("");
-    // setAmount(0);
+    if (file) {
+      const computeSHA256 = async (file: File) => {
+        const buffer = await file.arrayBuffer();
+        const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        const hashHex = hashArray
+          .map((b) => b.toString(16).padStart(2, "0"))
+          .join("");
+        return hashHex;
+      };
+
+      const signedURLResult = await getSignedURL({
+        fileSize: file.size,
+        fileType: file.type,
+        checksum: await computeSHA256(file),
+      });
+      if (signedURLResult.failure !== undefined) {
+        console.error(signedURLResult.failure);
+        return;
+      }
+
+      const { url, key /*id: recipeId*/ } = signedURLResult.success;
+      console.log(url);
+      debugger;
+      const ourFile = await fetch(url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": file.type,
+        },
+        body: file,
+      });
+
+      console.log(ourFile);
+
+      const s3FileUrl = `https://recipe-book-selinasein.s3.ca-central-1.amazonaws.com/${key}`;
+      const recipeResult = await createRecipe(s3FileUrl);
+      debugger;
+      // @ts-ignore
+      const recipePath = recipeResult[0].insertedId;
+      router.push(`/details/${recipePath}`);
+    }
   };
 
   return (
@@ -120,7 +156,7 @@ export default function CreateRecipeClient({
             name="newFile"
             id="uploadFile"
             accept="image/jpeg, image/png, image/webp, image/gif, video/mp4, video/webm"
-            onChange={() => {}}
+            onChange={handleChange}
             hidden
           ></input>
           <label htmlFor="uploadFile">

@@ -1,7 +1,7 @@
 "use server";
 
 import categories from "@/db/queries/categories";
-import CreateRecipeClient from "../components/CreateRecipeClient";
+import CreateRecipeClient from "../../components/CreateRecipeClient";
 
 export default async function Upload() {
   const categoriesList = await categories();

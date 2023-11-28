@@ -9,13 +9,14 @@ export const query = db
     title: recipesTable.title,
     image: recipesTable.image,
     description: recipesTable.description,
-    user: usersTable.firstName,
+    user: usersTable.name,
     category: categoriesTable.category,
     createdAt: recipesTable.createdAt,
   })
   .from(recipesTable)
   .innerJoin(usersTable, eq(usersTable.id, recipesTable.userId))
-  .innerJoin(categoriesTable, eq(categoriesTable.id, recipesTable.categoryId))
-  .orderBy(desc(recipesTable.createdAt));
+  .innerJoin(categoriesTable, eq(categoriesTable.id, recipesTable.categoryId));
+// .orderBy(desc(recipesTable.createdAt));
+// why does this line hide the recipe?
 
 export type Recipe = Awaited<ReturnType<typeof query.execute>>[0];
