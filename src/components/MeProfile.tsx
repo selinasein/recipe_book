@@ -7,17 +7,48 @@ import Container from "./Container";
 import { query } from "@/db/queries/recipeFeed";
 import MyRecipeContainer from "./MyRecipeContainer";
 
-export default async function MeProfile({ user }: { user: any }) {
+function getUniqueListBy(arr: any, key: any) {
+  return [...new Map(arr.map((item: any) => [item[key], item])).values()];
+}
+
+export default async function MeProfile({
+  user,
+  otherUserId,
+  otherUser,
+}: {
+  user: any;
+  otherUserId?: string;
+  otherUser: boolean;
+}) {
+  console.log("HEY");
+  console.log(otherUser);
+  console.log("BYE");
   if (!user) {
     redirect("/api/auth/signin?callbackUrl=/me");
   }
 
   const theLikedQuery = likedQuery(user.id);
   const likedResult = await theLikedQuery.execute();
+  console.log("BLAH");
+  console.log(likedResult);
 
-  const myRecipes = (await query.execute()).filter(
-    (recipe) => recipe.userId === user.id
-  );
+  const myRecipes = query(null);
+
+  let updatedRecipes;
+  if (otherUser) {
+    updatedRecipes = (await myRecipes.execute()).filter(
+      (recipe) => recipe.userId === otherUserId
+    );
+    console.log(otherUserId);
+  } else {
+    updatedRecipes = (await myRecipes.execute()).filter(
+      (recipe) => recipe.userId === user.id
+    );
+  }
+
+  const str = `h-full w-full justify-items-center place-self-center bg-slate-100 p-5 rounded-3xl ${
+    otherUser ? " md:col-span-3" : " md:col-span-2"
+  }`;
 
   return (
     <main className="grid grid-cols-1 lg:grid-cols-3 gap-3 flex-col items-center justify-between p-5">
@@ -51,49 +82,61 @@ export default async function MeProfile({ user }: { user: any }) {
         </div>
         <div className="items-center justify-center flex flex-col gap-2 relative bottom-20">
           <Image
-            src={user.image}
-            alt={user.name}
+            src={otherUser ? user[0].userImage : user.image}
+            alt={otherUser ? user[0].user : user.name}
             height={200}
             width={200}
             className="rounded-full h-25 w-25 mb-4"
           />
           <h2 className="text-xl font-semibold mb-2">{user.name}</h2>
-          <p className="text-gray-500">Email: {user.email}</p>
-          <SignOutButton
-            signOut={async () => {
-              "use server";
-              await signOut({ redirectTo: "/" });
-            }}
-          />
+          <p className="text-gray-500">
+            Email: {otherUser ? user[0].userEmail : user.email}
+          </p>
+          {!otherUser ? (
+            <SignOutButton
+              signOut={async () => {
+                "use server";
+                await signOut({ redirectTo: "/" });
+              }}
+            />
+          ) : null}
         </div>
       </div>
       <div className="divider divider-primary md:col-span-3"></div>
 
-      <div className="h-full place-items-start justify-items-center  bg-slate-100 p-5 rounded-3xl">
-        <h2 className="text-2xl font-bold text-center pb-3">
-          Recipes You Liked
-        </h2>
+      {!otherUser ? (
+        <div className="h-full place-items-start justify-items-center  bg-slate-100 p-5 rounded-3xl">
+          <h2 className="text-2xl font-bold text-center pb-3">
+            Recipes {otherUser ? user[0].user : user.name} Liked
+          </h2>
 
-        <div className="grid lg:grid-cols-2 place-items-start gap-5">
-          {likedResult.length === 0 ? (
-            <h1>Nothing to show</h1>
-          ) : (
-            likedResult.map((recipe: TLiked) => (
-              <Container item={recipe} key={recipe.id} />
-            ))
-          )}
+          <div className="grid lg:grid-cols-2 place-items-start gap-5">
+            {likedResult.length === 0 ? (
+              <h1>Nothing to show</h1>
+            ) : (
+              // @ts-ignore
+              getUniqueListBy(likedResult, "id").map((recipe: TLiked) => (
+                <Container item={recipe} key={recipe.id} />
+              ))
+            )}
+          </div>
         </div>
-      </div>
-      <div className="h-full w-full justify-items-center place-self-center bg-slate-100 p-5 rounded-3xl md:col-span-2">
+      ) : null}
+
+      <div className={str}>
         <h2 className="text-2xl font-bold text-center col-span-2 pb-3">
-          {user.name}'s Recipes
+          {otherUser ? user[0].user : user.name}'s Recipes
         </h2>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 p-3">
-          {myRecipes.length === 0 ? (
+          {updatedRecipes.length === 0 ? (
             <h1>Nothing to show</h1>
           ) : (
-            myRecipes.map((recipe) => (
-              <MyRecipeContainer recipe={recipe} key={recipe.id} />
+            updatedRecipes.map((recipe) => (
+              <MyRecipeContainer
+                hideDelete={otherUser ? true : false}
+                recipe={recipe}
+                key={recipe.id}
+              />
             ))
           )}
         </div>

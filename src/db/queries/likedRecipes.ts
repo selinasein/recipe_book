@@ -12,7 +12,7 @@ export const likedQuery = (incomingUserId: string) => {
       recipeImage: recipesTable.image,
     })
     .from(likesTable)
-    .innerJoin(usersTable, eq(usersTable.id, incomingUserId))
+    .innerJoin(usersTable, eq(likesTable.userId, incomingUserId))
     .innerJoin(recipesTable, eq(recipesTable.id, likesTable.recipeId));
 };
 

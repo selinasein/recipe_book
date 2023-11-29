@@ -1,8 +1,16 @@
 import { query } from "@/db/queries/recipeFeed";
 import MainFeed from "../components/MainFeed";
+import { Suspense } from "react";
+import Loading from "@/components/loading";
 
-export default async function Home() {
-  const recipes = await query.execute();
+export default async function Home({
+  searchParams,
+}: {
+  [key: string]: string | string[] | undefined;
+}) {
+  // @ts-ignore
+  const searchP = searchParams?.category || null;
+  const recipes = await query(searchP).execute();
 
   return (
     <main className="flex min-h-screen flex-col place-self-center items-center justify-between">
@@ -14,7 +22,9 @@ export default async function Home() {
           <div className="p-10">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 place-self-auto">
               {recipes.map((recipe, index) => (
-                <MainFeed key={index} recipe={recipe} />
+                <Suspense fallback={<Loading />}>
+                  <MainFeed key={index} recipe={recipe} />
+                </Suspense>
               ))}
             </div>
           </div>

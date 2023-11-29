@@ -13,6 +13,7 @@ export default function HeartIcon({ recipeId, isLiked }: Props) {
   const handleClick = async () => {
     setFilled(!filled);
     const formData = new FormData();
+    //empty object to be filled with data
 
     formData.set("recipeId", recipeId.toString());
     if (filled) {

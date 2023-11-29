@@ -1,14 +1,23 @@
 import { TRecipe } from "@/db/queries/recipeFeed";
 import Image from "next/image";
 import Link from "next/link";
+import DeleteRecipeButton from "./DeleteRecipeButton";
 
-export default function MyRecipeContainer({ recipe }: { recipe: TRecipe }) {
+export default function MyRecipeContainer({
+  recipe,
+  hideDelete,
+}: {
+  hideDelete: boolean;
+  recipe: TRecipe;
+}) {
   return (
-    <div className="group card w-full h-full bg-base-100 shadow-xl transform transition-transform duration-300 hover:cursor-pointer hover:font-bold">
+    <div className="group card w-full h-full bg-base-100 shadow-xl transform transition-transform duration-300 hover:font-bold">
       <div className="card-body">
-        <button className="md:opacity-0 md:group-hover:opacity-100 indicator-item badge badge-secondary absolute top-5 right-5 z-10 drop-shadow-md">
-          Delete
-        </button>
+        <DeleteRecipeButton
+          hideDelete={hideDelete}
+          recipeId={recipe.id}
+          userId={recipe.userId}
+        />
         <h2 className="card-title">{recipe.title}</h2>
         <p>{recipe.description}</p>
       </div>

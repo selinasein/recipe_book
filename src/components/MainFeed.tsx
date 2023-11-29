@@ -9,6 +9,7 @@ import { likesQuery } from "@/db/queries/likes";
 import { auth } from "@/auth";
 
 export default async function MainFeed({ recipe }: { recipe: TRecipe }) {
+  await new Promise((resolve) => setTimeout(resolve, 3000));
   const session = await auth();
   const userId = session?.user?.id;
 

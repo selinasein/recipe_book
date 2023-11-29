@@ -9,5 +9,5 @@ export default async function Me() {
     redirect("/api/auth/signin?callbackUrl=/me");
   }
 
-  return <MeProfile user={session.user} />;
+  return <MeProfile otherUser={false} user={session.user} />;
 }

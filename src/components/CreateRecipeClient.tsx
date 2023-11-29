@@ -12,7 +12,7 @@ export default function CreateRecipeClient({
   categories: TCategory[];
 }) {
   const [recipeTitle, setRecipeTitle] = useState("");
-  const [recipeCategory, setRecipeCategory] = useState("");
+  const [recipeCategory, setRecipeCategory] = useState("1");
   const [recipeIngredients, setRecipeIngredients] = useState("");
   const [recipeInstructions, setRecipeInstructions] = useState("");
   const [recipeDescription, setRecipeDescription] = useState("");
@@ -25,6 +25,13 @@ export default function CreateRecipeClient({
     setFile(e.target.files?.[0]);
   };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    console.log(
+      recipeTitle,
+      recipeCategory,
+      recipeIngredients,
+      recipeInstructions,
+      recipeDescription
+    );
     e.preventDefault();
     if (file) {
       const computeSHA256 = async (file: File) => {
@@ -63,9 +70,9 @@ export default function CreateRecipeClient({
         s3FileUrl,
         recipeTitle,
         recipeDescription,
-        recipeCategory,
         recipeIngredients,
-        recipeInstructions
+        recipeInstructions,
+        recipeCategory
       );
 
       // @ts-ignore
@@ -180,6 +187,7 @@ export default function CreateRecipeClient({
           <p className="text-sm mb-3">Upload Your Recipe Photo!</p>
           <input
             type="file"
+            required
             name="newFile"
             id="uploadFile"
             accept="image/jpeg, image/png, image/webp, image/gif, video/mp4, video/webm"

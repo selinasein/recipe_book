@@ -16,6 +16,7 @@ export default async function addLike(formData: FormData) {
     .values({ userId, recipeId: parseInt(recipeId) })
     .returning();
 
+  revalidatePath(`/details/${recipeId}`);
   revalidatePath(`/`);
   redirect(`/`);
 }
