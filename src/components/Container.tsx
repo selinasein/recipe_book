@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Container({ item }: { item: TLiked }) {
   return (
-    <div className="relative group container drop-shadow-lg overflow-hidden">
+    <div className="h-20 relative group container drop-shadow-lg overflow-hidden">
       <Link href={`/details/${item.id}`}>
         <Image
           src={item.recipeImage}

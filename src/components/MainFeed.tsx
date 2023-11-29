@@ -1,6 +1,6 @@
 "use server";
 
-import { Recipe } from "@/db/queries/recipeFeed";
+import { TRecipe } from "@/db/queries/recipeFeed";
 import Link from "next/link";
 import Image from "next/image";
 import HeartIcon from "./HeartIcon";
@@ -8,7 +8,7 @@ import NewIcon from "./NewIcon";
 import { likesQuery } from "@/db/queries/likes";
 import { auth } from "@/auth";
 
-export default async function MainFeed({ recipe }: { recipe: Recipe }) {
+export default async function MainFeed({ recipe }: { recipe: TRecipe }) {
   const session = await auth();
   const userId = session?.user?.id;
 

@@ -15,7 +15,8 @@ export default function CreateRecipeClient({
   const [recipeCategory, setRecipeCategory] = useState("");
   const [recipeIngredients, setRecipeIngredients] = useState("");
   const [recipeInstructions, setRecipeInstructions] = useState("");
-  const [recipeImage, setRecipeImage] = useState("");
+  const [recipeDescription, setRecipeDescription] = useState("");
+  // const [recipeImage, setRecipeImage] = useState("");
   const [recipeTitleIndicator, setRecipeTitleIndicator] = useState("");
   const [file, setFile] = useState<File | undefined>(undefined);
   const router = useRouter();
@@ -58,7 +59,14 @@ export default function CreateRecipeClient({
       });
 
       const s3FileUrl = `https://recipe-book-selinasein.s3.ca-central-1.amazonaws.com/${key}`;
-      const recipeResult = await createRecipe(s3FileUrl);
+      const recipeResult = await createRecipe(
+        s3FileUrl,
+        recipeTitle,
+        recipeDescription,
+        recipeCategory,
+        recipeIngredients,
+        recipeInstructions
+      );
 
       // @ts-ignore
       const recipePath = recipeResult[0].insertedId;
@@ -119,15 +127,34 @@ export default function CreateRecipeClient({
 
         <div className="form-control w-full max-w-xs mb-5">
           <label className="label col-span-3">
+            <span className="label-text">Can you describe your recipe?</span>
+          </label>
+          <input
+            type="text"
+            id="recipeDescription"
+            name="recipeDescription"
+            placeholder="Type here"
+            value={recipeDescription}
+            onChange={(e) => {
+              setRecipeDescription(e.target.value);
+            }}
+            className="input input-bordered w-full max-w-xs col-span-2"
+          />
+        </div>
+
+        <div className="form-control w-full max-w-xs mb-5">
+          <label className="label col-span-3">
             <span className="label-text">What are the ingredients?</span>
           </label>
           <input
             type="text"
-            id="title"
-            name="title"
+            id="recipeIngredients"
+            name="recipeIngredients"
             placeholder="Type here"
-            //   value={}
-            onChange={(e) => {}}
+            value={recipeIngredients}
+            onChange={(e) => {
+              setRecipeIngredients(e.target.value);
+            }}
             className="input input-bordered w-full max-w-xs col-span-2"
           />
         </div>
@@ -138,11 +165,13 @@ export default function CreateRecipeClient({
           </label>
           <input
             type="text"
-            id="title"
-            name="title"
+            id="recipeInstructions"
+            name="recipeInstructions"
             placeholder="Type here"
-            //   value={}
-            onChange={(e) => {}}
+            value={recipeInstructions}
+            onChange={(e) => {
+              setRecipeInstructions(e.target.value);
+            }}
             className="input input-bordered w-full max-w-xs col-span-2"
           />
         </div>

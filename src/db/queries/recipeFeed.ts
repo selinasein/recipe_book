@@ -10,6 +10,7 @@ export const query = db
     image: recipesTable.image,
     description: recipesTable.description,
     user: usersTable.name,
+    userId: recipesTable.userId,
     category: categoriesTable.category,
     createdAt: recipesTable.createdAt,
   })

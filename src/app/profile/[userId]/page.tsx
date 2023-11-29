@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
+import Image from "next/image";
 
 export default async function Profile({
   params,
@@ -24,7 +25,7 @@ export default async function Profile({
   return (
     <main className="grid grid-cols-1 md:grid-cols-3 grid-flow-col gap-4 flex-col items-center justify-between p-10">
       <div className="flex flex-col items-center place-self-stretch">
-        <img
+        <Image
           src="https://placekitten.com/150/150" // Replace with your profile picture URL
           alt="Profile"
           className="rounded-full h-25 w-25 mb-4"

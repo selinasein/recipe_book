@@ -5,7 +5,14 @@ import { db } from "@/db";
 import { recipes } from "@/db/schema/recipes";
 import { revalidatePath } from "next/cache";
 
-export async function createRecipe(imgUrl: string) {
+export async function createRecipe(
+  imgUrl: string,
+  recipeTitle: string,
+  recipeDescription: string,
+  recipeIngredients: string,
+  recipeInstructions: string,
+  recipeCategory: string
+) {
   const session = await auth();
 
   if (!session) {
@@ -15,11 +22,11 @@ export async function createRecipe(imgUrl: string) {
   const results = await db
     .insert(recipes)
     .values({
-      title: "abc",
-      description: "abc",
-      ingredients: "abc",
-      instructions: "abc",
-      categoryId: 1,
+      title: recipeTitle,
+      description: recipeDescription,
+      ingredients: recipeIngredients,
+      instructions: recipeInstructions,
+      categoryId: parseInt(recipeCategory),
       likes: 0,
       image: imgUrl,
       userId: session.user.id,

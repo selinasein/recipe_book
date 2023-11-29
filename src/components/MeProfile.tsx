@@ -1,9 +1,11 @@
 import Image from "next/image";
-import { auth, signOut } from "@/auth";
+import { signOut } from "@/auth";
 import { redirect } from "next/navigation";
 import SignOutButton from "./SignOutButton";
 import { TLiked, likedQuery } from "@/db/queries/likedRecipes";
 import Container from "./Container";
+import { query } from "@/db/queries/recipeFeed";
+import MyRecipeContainer from "./MyRecipeContainer";
 
 export default async function MeProfile({ user }: { user: any }) {
   if (!user) {
@@ -13,9 +15,13 @@ export default async function MeProfile({ user }: { user: any }) {
   const theLikedQuery = likedQuery(user.id);
   const likedResult = await theLikedQuery.execute();
 
+  const myRecipes = (await query.execute()).filter(
+    (recipe) => recipe.userId === user.id
+  );
+
   return (
-    <main className="grid grid-cols-1 lg:grid-cols-3 gap-5 flex-col items-center justify-between p-5 md:p-16 ">
-      <div className="flex flex-col items-center place-self-stretch space-between gap-1">
+    <main className="grid grid-cols-1 lg:grid-cols-3 gap-3 flex-col items-center justify-between p-5">
+      <div className="flex flex-col items-center place-self-stretch space-between gap-1 md:col-span-3">
         <div className="relative top-5 md:top-10">
           <svg
             width="60"
@@ -61,21 +67,33 @@ export default async function MeProfile({ user }: { user: any }) {
           />
         </div>
       </div>
-      <div className="md:mt-8 place-self-start md:col-span-2 h-full bg-slate-100 p-5  rounded-3xl">
-        <h1 className="md:text-xl lg:text-3xl font-bold mb-4 text-center">
-          {user.name}'s Recipe Book
-        </h1>
+      <div className="divider divider-primary md:col-span-3"></div>
 
-        <h2 className="text-2xl font-bold mt-10 text-center col-span-2 pb-3">
+      <div className="h-full place-items-start justify-items-center  bg-slate-100 p-5 rounded-3xl">
+        <h2 className="text-2xl font-bold text-center pb-3">
           Recipes You Liked
         </h2>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 place-self-center gap-5">
+        <div className="grid lg:grid-cols-2 place-items-start gap-5">
           {likedResult.length === 0 ? (
             <h1>Nothing to show</h1>
           ) : (
             likedResult.map((recipe: TLiked) => (
               <Container item={recipe} key={recipe.id} />
+            ))
+          )}
+        </div>
+      </div>
+      <div className="h-full w-full justify-items-center place-self-center bg-slate-100 p-5 rounded-3xl md:col-span-2">
+        <h2 className="text-2xl font-bold text-center col-span-2 pb-3">
+          {user.name}'s Recipes
+        </h2>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 p-3">
+          {myRecipes.length === 0 ? (
+            <h1>Nothing to show</h1>
+          ) : (
+            myRecipes.map((recipe) => (
+              <MyRecipeContainer recipe={recipe} key={recipe.id} />
             ))
           )}
         </div>

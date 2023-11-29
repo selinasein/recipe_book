@@ -15,6 +15,7 @@ export const query = (recipeId: string) => {
       likes: recipesTable.likes,
       userId: recipesTable.userId,
       user: usersTable.name,
+      userImage: usersTable.image,
       category: categoriesTable.category,
       createdAt: recipesTable.createdAt,
     })
