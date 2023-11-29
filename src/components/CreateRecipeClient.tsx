@@ -46,9 +46,9 @@ export default function CreateRecipeClient({
         return;
       }
 
-      const { url, key /*id: recipeId*/ } = signedURLResult.success;
-      console.log(url);
-      debugger;
+      const { url, key } = signedURLResult.success;
+
+      // debugger;
       const ourFile = await fetch(url, {
         method: "PUT",
         headers: {
@@ -57,11 +57,9 @@ export default function CreateRecipeClient({
         body: file,
       });
 
-      console.log(ourFile);
-
       const s3FileUrl = `https://recipe-book-selinasein.s3.ca-central-1.amazonaws.com/${key}`;
       const recipeResult = await createRecipe(s3FileUrl);
-      debugger;
+
       // @ts-ignore
       const recipePath = recipeResult[0].insertedId;
       router.push(`/details/${recipePath}`);

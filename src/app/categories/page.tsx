@@ -1,6 +1,8 @@
-import { categories } from "../fakeDb";
+import { categoryQuery } from "@/db/queries/categories";
 
-export default function Categories() {
+export default async function Categories() {
+  const categories = await categoryQuery.execute();
+
   return (
     <div className="container mx-auto p-20 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-10">
       {categories.map((category) => (
@@ -15,7 +17,7 @@ export default function Categories() {
         >
           <div className="absolute inset-0 opacity-0 bg-slate-500 hover:opacity-50 hover:cursor-pointer"></div>
           <h2 className="text-white text-3xl font-semibold mb-20 mx-10 justify-center items-center hover:text-black">
-            {category.name}
+            {category.category}
           </h2>
         </div>
       ))}

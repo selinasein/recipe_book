@@ -1,12 +1,8 @@
 import { query } from "@/db/queries/recipeFeed";
 import MainFeed from "../components/MainFeed";
-import { db } from "@/db";
-import { recipes as myRecipes } from "@/db/schema/recipes";
 
 export default async function Home() {
   const recipes = await query.execute();
-  // const myrecipes = await db.select().from(myRecipes);
-  console.log(recipes);
 
   return (
     <main className="flex min-h-screen flex-col place-self-center items-center justify-between">

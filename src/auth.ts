@@ -12,7 +12,7 @@ export const authConfig = {
       return session;
     },
   },
-  debug: true,
+  // debug: true,
 } satisfies NextAuthConfig;
 
 export const { handlers, auth, signOut } = NextAuth(authConfig);

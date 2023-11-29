@@ -1,10 +1,22 @@
 import Image from "next/image";
+import { auth, signOut } from "@/auth";
+import { redirect } from "next/navigation";
+import SignOutButton from "./SignOutButton";
+import { TLiked, likedQuery } from "@/db/queries/likedRecipes";
+import Container from "./Container";
 
-export default function MeProfile({ user }: { user: any }) {
+export default async function MeProfile({ user }: { user: any }) {
+  if (!user) {
+    redirect("/api/auth/signin?callbackUrl=/me");
+  }
+
+  const theLikedQuery = likedQuery(user.id);
+  const likedResult = await theLikedQuery.execute();
+
   return (
-    <main className="grid grid-cols-1 md:grid-cols-3 gap-5 flex-col items-center justify-between p-5 md:p-16 ">
-      <div className="flex flex-col items-center place-self-stretch ">
-        <div className="relative top-10">
+    <main className="grid grid-cols-1 lg:grid-cols-3 gap-5 flex-col items-center justify-between p-5 md:p-16 ">
+      <div className="flex flex-col items-center place-self-stretch space-between gap-1">
+        <div className="relative top-5 md:top-10">
           <svg
             width="60"
             height="60"
@@ -26,49 +38,47 @@ export default function MeProfile({ user }: { user: any }) {
             </g>
           </svg>
         </div>
-
-        <Image
-          src={user.image} // Replace with your profile picture URL
-          alt={user.name}
-          height={200}
-          width={200}
-          className="rounded-full h-25 w-25 mb-4"
-        />
-        <h2 className="text-xl font-semibold mb-2">{user.name}</h2>
-        <p className="text-gray-500">Email: {user.email}</p>
-
-        {/* {isLoggedIn ? (
-          <button
-            // onClick={handleSignOut}
-            className="mt-4 bg-red-500 text-white px-4 py-2 rounded"
-          >
-            Sign Out
-          </button>
-        ) : (
-          <button
-            // onClick={handleSignIn}
-            className="mt-4 bg-green-500 text-white px-4 py-2 rounded"
-          >
-            Sign In
-          </button>
-        )} */}
+        <div className="chat chat-start">
+          <div className="chat-bubble chat-bubble-primary relative left-52 md:left-70 opacity-60 lg:left-60 top-35 text-xs md:text-base">
+            Hmm... What should I to cook today?
+          </div>
+        </div>
+        <div className="items-center justify-center flex flex-col gap-2 relative bottom-20">
+          <Image
+            src={user.image}
+            alt={user.name}
+            height={200}
+            width={200}
+            className="rounded-full h-25 w-25 mb-4"
+          />
+          <h2 className="text-xl font-semibold mb-2">{user.name}</h2>
+          <p className="text-gray-500">Email: {user.email}</p>
+          <SignOutButton
+            signOut={async () => {
+              "use server";
+              await signOut({ redirectTo: "/" });
+            }}
+          />
+        </div>
       </div>
-      <div className="md:mt-8 place-self-start md:col-span-2 bg-slate-100 p-10 w-11/12 rounded-3xl">
-        <h1 className="text-3xl font-bold mb-4 text-center">
+      <div className="md:mt-8 place-self-start md:col-span-2 h-full bg-slate-100 p-5  rounded-3xl">
+        <h1 className="md:text-xl lg:text-3xl font-bold mb-4 text-center">
           {user.name}'s Recipe Book
         </h1>
-        <p className="text-gray-600 pb-3 text-center">
-          What are you going to cook today?
-        </p>
-        <h2 className="text-2xl font-bold mt-10 text-center col-span-2">
+
+        <h2 className="text-2xl font-bold mt-10 text-center col-span-2 pb-3">
           Recipes You Liked
         </h2>
 
-        <ul>
-          <li className="mb-2">Recipe 1</li>
-          <li className="mb-2">Recipe 2</li>
-          <li className="mb-2">Recipe 3</li>
-        </ul>
+        <div className="grid grid-cols-2 lg:grid-cols-4 place-self-center gap-5">
+          {likedResult.length === 0 ? (
+            <h1>Nothing to show</h1>
+          ) : (
+            likedResult.map((recipe: TLiked) => (
+              <Container item={recipe} key={recipe.id} />
+            ))
+          )}
+        </div>
       </div>
     </main>
   );

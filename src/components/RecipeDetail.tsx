@@ -4,6 +4,7 @@ import { TLikes } from "@/db/queries/likes";
 import { TRecipeDetail } from "@/db/queries/recipeDetail";
 import Link from "next/link";
 import formatDateString from "@/utils/formatDateString";
+import NewIcon from "./NewIcon";
 
 type Props = {
   recipe: TRecipeDetail;
@@ -21,15 +22,16 @@ export default function RecipeDetail({ recipe, comments, likes }: Props) {
             alt={recipe.title}
           />
         </figure>
-        <div className="card-body ">
+        <div className="card-body">
           <h2 className="card-title text-3xl items-center justify-center">
             {recipe.title}
           </h2>
           <div className="grid grid-cols-3">
             <p className="col-span-2">{recipe.description}</p>
-            <div className="badge badge-neutral  place-self-end">
-              {recipe.category}
+            <div className="place-self-end">
+              <div className="badge badge-neutral">{recipe.category}</div>
             </div>
+            <NewIcon createdAt={recipe.createdAt} />
           </div>
 
           <div className="pt-1">
@@ -80,21 +82,7 @@ export default function RecipeDetail({ recipe, comments, likes }: Props) {
       <div className="grid justify-center place-self-start gap-5">
         <div className="stats shadow-xl border border-gray-200 max-h-50">
           <div className="stat">
-            <div className="stat-figure text-primary">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                className="inline-block w-8 h-8 stroke-current"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                ></path>
-              </svg>
-            </div>
+            <div className="stat-figure text-primary"></div>
             <div className="stat-title">Total Likes</div>
             <div className="stat-value text-primary">{likes.length || 0}</div>
             <div className="stat-desc">

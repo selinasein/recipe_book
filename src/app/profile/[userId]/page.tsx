@@ -1,6 +1,17 @@
-"use client";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 
-export default function Profil({ params }: { params: { userId: string } }) {
+export default async function Profile({
+  params,
+}: {
+  params: { userId: string };
+}) {
+  const session = await auth();
+
+  if (session?.user.id == params.userId) {
+    redirect("/me");
+  }
+
   const isLoggedIn = true; // Replace with your authentication logic
   const userData = {
     username: "Your Name",
@@ -9,14 +20,6 @@ export default function Profil({ params }: { params: { userId: string } }) {
   };
 
   const user_id = params.userId;
-
-  const handleSignOut = () => {
-    // Implement your sign-out logic here
-  };
-
-  const handleSignIn = () => {
-    // Implement your sign-in logic here
-  };
 
   return (
     <main className="grid grid-cols-1 md:grid-cols-3 grid-flow-col gap-4 flex-col items-center justify-between p-10">
@@ -31,14 +34,14 @@ export default function Profil({ params }: { params: { userId: string } }) {
         <p className="text-gray-500">Joined: {userData.joinedDate}</p>
         {isLoggedIn ? (
           <button
-            onClick={handleSignOut}
+            // onClick={handleSignOut}
             className="mt-4 bg-red-500 text-white px-4 py-2 rounded"
           >
             Sign Out
           </button>
         ) : (
           <button
-            onClick={handleSignIn}
+            // onClick={handleSignIn}
             className="mt-4 bg-green-500 text-white px-4 py-2 rounded"
           >
             Sign In

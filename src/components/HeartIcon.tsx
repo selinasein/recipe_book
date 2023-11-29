@@ -7,11 +7,13 @@ type Props = {
   recipeId: number;
   isLiked: boolean;
 };
+
 export default function HeartIcon({ recipeId, isLiked }: Props) {
   const [filled, setFilled] = useState(isLiked);
   const handleClick = async () => {
     setFilled(!filled);
     const formData = new FormData();
+
     formData.set("recipeId", recipeId.toString());
     if (filled) {
       await deleteLike(formData);

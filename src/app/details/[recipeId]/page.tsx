@@ -13,8 +13,6 @@ export default async function Details({
   const result = await recipeQuery.execute();
   const recipe: TRecipeDetail = result[0];
 
-  console.log(recipe);
-
   const theLikesQuery = likesQuery(parseInt(recipeId));
   const likesResult = await theLikesQuery.execute();
   const likes: TLikes = likesResult;
@@ -25,10 +23,3 @@ export default async function Details({
 
   return <RecipeDetail recipe={recipe} comments={comments} likes={likes} />;
 }
-
-/*
-
- <ol className="list-decimal m-5 text-sm">
-            {recipeData.instructions.split(".").map((instruction) => (instruction.length>1 && <li key={instruction}>Done ! Bon Apetite ! </li> : <li key={instruction}}>{instruction}</li>
-            ))}
-          </ol>*/
