@@ -53,7 +53,7 @@ export default async function MeProfile({
   return (
     <main className="grid grid-cols-1 lg:grid-cols-3 gap-3 flex-col items-center justify-between p-5">
       <div className="flex flex-col items-center place-self-stretch space-between gap-1 md:col-span-3">
-        <div className="relative top-5 md:top-10">
+        <div className="relative top-5 md:top-10 z-30">
           <svg
             width="60"
             height="60"
@@ -76,11 +76,11 @@ export default async function MeProfile({
           </svg>
         </div>
         <div className="chat chat-start">
-          <div className="chat-bubble chat-bubble-primary relative left-52 md:left-70 opacity-60 lg:left-60 top-35 text-xs md:text-base">
+          <div className="chat-bubble chat-bubble-primary relative left-52 md:left-70 opacity-60 lg:left-60 top-35 text-xs md:text-base z-30">
             Hmm... What should I to cook today?
           </div>
         </div>
-        <div className="items-center justify-center flex flex-col gap-2 relative bottom-20">
+        <div className="items-center justify-center z-10 flex flex-col gap-2 relative bottom-20">
           <Image
             src={otherUser ? user[0].userImage : user.image}
             alt={otherUser ? user[0].user : user.name}
